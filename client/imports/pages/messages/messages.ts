@@ -15,6 +15,7 @@ export class MessagesPage implements OnInit, OnDestroy {
   selectedChat: Chat;
   title: string;
   picture: string;
+  senderId: string;
   messagesDayGroups;
   messages: Observable<Message[]>;
   message: string = '';
@@ -28,6 +29,7 @@ export class MessagesPage implements OnInit, OnDestroy {
     this.selectedChat = <Chat>navParams.get('chat');
     this.title = this.selectedChat.title;
     this.picture = this.selectedChat.picture;
+    this.senderId = Meteor.userId();
   }
 
   ngOnInit() {
@@ -57,7 +59,7 @@ export class MessagesPage implements OnInit, OnDestroy {
 
         // Compose missing data that we would like to show in the view
         messages.forEach((message) => {
-          message.ownership = isEven ? 'mine' : 'other';
+          message.ownership = this.senderId == message.senderId ? 'mine' : 'other';
           isEven = !isEven;
 
           return message;
@@ -109,7 +111,7 @@ export class MessagesPage implements OnInit, OnDestroy {
     // Zero offset for next invocation
     this.scrollOffset = 0;
   }
-  
+
   onInputKeypress({ keyCode }: KeyboardEvent): void {
     if (keyCode === 13) {
       this.sendTextMessage();
