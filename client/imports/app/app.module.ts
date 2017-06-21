@@ -3,6 +3,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MomentModule } from 'angular2-moment';
 import { ChatsPage } from '../pages/chats/chats';
 import { ChatsOptionsComponent } from '../pages/chats/chats-options';
+import { MessagesOptionsComponent } from '../pages/messages/messages-options';
 import { NewChatComponent } from '../pages/chats/new-chat';
 import { PhoneService } from '../services/phone';
 import { MessagesPage } from '../pages/messages/messages';
@@ -20,7 +21,8 @@ import { ProfilePage } from '../pages/profile/profile';
     VerificationPage,
     ProfilePage,
     ChatsOptionsComponent,
-    NewChatComponent
+    NewChatComponent,
+    MessagesOptionsComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -35,7 +37,8 @@ import { ProfilePage } from '../pages/profile/profile';
     VerificationPage,
     ProfilePage,
     ChatsOptionsComponent,
-    NewChatComponent
+    NewChatComponent,
+    MessagesOptionsComponent
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },

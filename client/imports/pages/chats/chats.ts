@@ -5,7 +5,7 @@ import * as Moment from 'moment';
 import { Observable, Subscriber } from 'rxjs';
 import { Chats, Messages, Users } from '../../../../imports/collections';
 import { Chat, Message, MessageType } from '../../../../imports/models';
-import { NavController, PopoverController, ModalController } from 'ionic-angular';
+import { NavController, PopoverController, ModalController, AlertController } from 'ionic-angular';
 import { ChatsOptionsComponent } from './chats-options';
 import { NewChatComponent } from './new-chat';
 import template from './chats.html';
@@ -19,12 +19,17 @@ export class ChatsPage implements OnInit {
 
   constructor(private navCtrl: NavController,
               private popoverCtrl: PopoverController,
-              private modalCtrl: ModalController) {
+              private modalCtrl: ModalController,
+              private alertCtrl: AlertController) {
       this.senderId = Meteor.userId();
   }
 
   ngOnInit() {
-    this.chats = this.findChats();
+    MeteorObservable.subscribe('chats').subscribe(() => {
+      MeteorObservable.autorun().subscribe(() => {
+        this.chats = this.findChats();
+      });
+    });
   }
 
   addChat(): void {
@@ -93,12 +98,30 @@ export class ChatsPage implements OnInit {
       });
     });
   }
-  
+
   showMessages(chat): void {
     this.navCtrl.push(MessagesPage, {chat});
   }
 
   removeChat(chat: Chat): void {
-    Chats.remove({_id: chat._id}).subscribe(() => {});
+    MeteorObservable.call('removeChat', chat._id).subscribe({
+      error: (e: Error) => {
+        if (e) {
+          this.handleError(e);
+        }
+      }
+    });
+  }
+
+  handleError(e: Error): void {
+    console.error(e);
+
+    const alert = this.alertCtrl.create({
+      buttons: ['OK'],
+      message: e.message,
+      title: 'Oops!'
+    });
+
+    alert.present();
   }
 }
