@@ -37,7 +37,7 @@ Meteor.methods({
       throw new Meteor.Error('unauthorized',
         'User must be logged-in to remove chat');
     }
- 
+
     check(chatId, String);
 
     const chatExists = !!Chats.collection.find(chatId).count();
@@ -87,5 +87,9 @@ Meteor.methods({
         type: type
       })
     };
+  },
+
+  countMessages(): number {
+    return Messages.collection.find().count();
   }
 });
