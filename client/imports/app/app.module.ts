@@ -11,6 +11,9 @@ import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { VerificationPage } from '../pages/verification/verification';
 import { ProfilePage } from '../pages/profile/profile';
+import { AgmCoreModule } from 'angular2-google-maps/core';
+import { MessagesAttachmentsComponent } from '../pages/messages/messages-attachments';
+import { NewLocationMessageComponent } from '../pages/messages/location-message';
 
 @NgModule({
   declarations: [
@@ -22,11 +25,16 @@ import { ProfilePage } from '../pages/profile/profile';
     ProfilePage,
     ChatsOptionsComponent,
     NewChatComponent,
-    MessagesOptionsComponent
+    MessagesOptionsComponent,
+    MessagesAttachmentsComponent,
+    NewLocationMessageComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    MomentModule
+    MomentModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAWoBdZHCNh5R-hB5S5ZZ2oeoYyfdDgniA'
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -38,7 +46,9 @@ import { ProfilePage } from '../pages/profile/profile';
     ProfilePage,
     ChatsOptionsComponent,
     NewChatComponent,
-    MessagesOptionsComponent
+    MessagesOptionsComponent,
+    MessagesAttachmentsComponent,
+    NewLocationMessageComponent
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },

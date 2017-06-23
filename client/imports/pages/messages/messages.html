@@ -7,7 +7,7 @@
     <ion-title class="chat-title">{{title}}</ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only class="attach-button"><ion-icon name="attach"></ion-icon></button>
+      <button ion-button icon-only class="attach-button" (click)="showAttachments()"><ion-icon name="attach"></ion-icon></button>
       <button ion-button icon-only class="options-button" (click)="showOptions()"><ion-icon name="more"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
@@ -19,6 +19,11 @@
       <div *ngFor="let message of day.messages" class="message-wrapper">
         <div [class]="'message message-' + message.ownership">
           <div *ngIf="message.type == 'text'" class="message-content message-content-text">{{message.content}}</div>
+          <div *ngIf="message.type == 'location'" class="message-content message-content-text">
+            <sebm-google-map [zoom]="getLocation(message.content).zoom" [latitude]="getLocation(message.content).lat" [longitude]="getLocation(message.content).lng">
+              <sebm-google-map-marker [latitude]="getLocation(message.content).lat" [longitude]="getLocation(message.content).lng"></sebm-google-map-marker>
+            </sebm-google-map>
+          </div>
           <span class="message-timestamp">{{ message.createdAt | amDateFormat: 'HH:mm' }}</span>
         </div>
       </div>

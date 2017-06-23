@@ -8,7 +8,8 @@ export interface Profile {
 }
 
 export enum MessageType {
-  TEXT = <any>'text'
+  TEXT = <any>'text',
+  LOCATION = <any>'location'
 }
 
 export interface Chat {
@@ -31,4 +32,10 @@ export interface Message {
 
 export interface User extends Meteor.User {
   profile?: Profile;
+}
+
+export interface Location {
+  lat: number;
+  lng: number;
+  zoom: number;
 }
